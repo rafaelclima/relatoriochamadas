@@ -22,7 +22,7 @@
       <label for="input-csv">Selecione o arquivo .CSV</label>
       <input type="file" id="input-csv">
       <label for="input-ramal">Digite o ramal de origem</label>
-      <input type="number" id="input-ramal">
+      <input type="number" id="input-ramal" placeholder="*campo obrigatório">
       <label for="input-ramal-destino">Digite o ramal de destino</label>
       <input type="number" id="input-ramal-destino" placeholder="*opcional">
       <form id="periodo-data">
@@ -39,7 +39,7 @@
   <div class="container">
     <h1>Relatório de Ligações</h1>
     <div id="tabela">
-      <table>
+      <table id="filtro-tabela">
         <thead>
           <tr>
             <th>Origem</th>
@@ -50,28 +50,7 @@
             <th>Duração</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              595
-            </td>
-            <td>
-              597
-            </td>
-            <td>
-              01-02-2023
-            </td>
-            <td>
-              10:40
-            </td>
-            <td>
-              Atendida
-            </td>
-            <td>
-              0m 53s
-            </td>
-          </tr>
-          <!-- linhas da tabela aqui -->
+        <tbody id="corpo-tabela">
         </tbody>
       </table>
     </div>

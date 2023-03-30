@@ -208,6 +208,8 @@ select {
   display: none;
   border-collapse: collapse;
   width: 100%;
+  max-height: 80vh;
+  overflow: auto;
 }
 
 #tabela th,
@@ -219,16 +221,23 @@ select {
 }
 
 #tabela th {
-  background-color: #222;
+  background-color: #fff;
+  color: #000000;
   font-weight: bold;
+  position: sticky;
+  top: 0;
 }
 
 #tabela tr:nth-child(even) {
-  background-color: #333;
+  background-color: #21b7d0;
+}
+
+#tabela tr {
+  background-color: #28225e;
 }
 
 #tabela tr:hover {
-  background-color: #555;
+  background-color: #000000;
 }
 
 
@@ -318,7 +327,8 @@ h1 {
 
 #tempo-chamada-externa-efetuada,
 #tempo-chamada-externa-recebida,
-#tempo-chamada-interna-efetuada {
+#tempo-chamada-interna-efetuada,
+#tempo-chamada-interna-recebida {
   font-size: 32px;
 }
 
