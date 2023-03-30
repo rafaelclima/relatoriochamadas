@@ -114,7 +114,7 @@ function transformarStatus(estado) {
 }
 
 filterBtn.addEventListener('click', function() {
-  // divCards.style.opacity = 1
+
   Papa.parse(document.getElementById('input-csv').files[0], {
     download: true,
     header: true,
@@ -124,8 +124,6 @@ filterBtn.addEventListener('click', function() {
     dynamicTyping: true,
     skipEmptyLines: true,
     complete: function(results) {
-      // const data = results.data;
-      // código para extrair as informações
       arrCsv = results.data.map(item => ({
         Data: item.Data,
         Origem: item.Origem,
