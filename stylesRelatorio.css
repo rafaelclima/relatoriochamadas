@@ -267,10 +267,6 @@ h1 {
   width: 100%;
 }
 
-.container h2:nth-child(1) {
-  margin-top: 24px;
-}
-
 .cards {
   display: flex;
   width: 100%;
@@ -285,8 +281,8 @@ h1 {
 .card {
   /* width: calc(40% - 20px); */
   /* width: 35%; */
-  width: 220px;
-  height: 200px;
+  width: 200px;
+  height: 190px;
   /* max-width: 350px;
   height: 300px; */
   /* margin: 20px; */
@@ -300,10 +296,7 @@ h1 {
 
 .card h3 {
   margin-bottom: 16px;
-}
-
-.card p {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .circle {
@@ -318,13 +311,14 @@ h1 {
 }
 
 .circle span {
-  font-size: 48px;
+  font-size: 40px;
   font-weight: bold;
   color: #ffffff;
 }
 
 #tempo-chamada-externa-efetuada,
-#tempo-chamada-externa-recebida {
+#tempo-chamada-externa-recebida,
+#tempo-chamada-interna-efetuada {
   font-size: 32px;
 }
 
