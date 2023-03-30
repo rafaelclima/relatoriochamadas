@@ -216,12 +216,12 @@ select {
 #tabela td {
   padding: 10px;
   text-align: center;
-  border: 1px solid #ddd;
-  color: #fff;
+  border: 2px solid #000000;
+  
 }
 
 #tabela th {
-  background-color: #fff;
+  background-color: #21b7d0;
   color: #000000;
   font-weight: bold;
   position: sticky;
@@ -229,15 +229,17 @@ select {
 }
 
 #tabela tr:nth-child(even) {
-  background-color: #21b7d0;
+  background-color: #28225e;
+  color: #fff;
 }
 
 #tabela tr {
-  background-color: #28225e;
+  background-color: #fff;
+  color: #000000;
 }
 
 #tabela tr:hover {
-  background-color: #000000;
+  background-color: #21b7d0;
 }
 
 
