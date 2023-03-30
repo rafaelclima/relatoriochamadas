@@ -153,11 +153,8 @@ filterBtn.addEventListener('click', function() {
           const toStringRecebida = ramaisOrigem.Origem.toString()
           const regexFiltroData = /^(\d{4}-\d{2}-\d{2}).*/;
           const regexFiltroHora = /\d{4}-\d{2}-\d{2}\s(\d{2}:\d{2}:\d{2})/
-          // const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");
           const dataInicio = new Date(dataInicial.value).getTime();
           const dataFim = new Date(dataFinal.value).getTime();
-          // const horaFiltrada = ramaisOrigem.Data.match(regexFiltroHora)[1]
-          // const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");
 
           if (inputDestino.value !== "" && dataInicial !== "" && dataFinal !== "" ) {
             const corpoTabela = document.getElementById('corpo-tabela')
@@ -168,21 +165,17 @@ filterBtn.addEventListener('click', function() {
               const horaFiltrada = ramaisOrigem.Data.match(regexFiltroHora)[1]
               const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");
 
-              // Defina a data no formato "AAAA-MM-DD"
+              // Data no formato "AAAA-MM-DD"
               var dataHora = dataFiltrada;
-
-              // Separe a data em partes usando a função split()
+              // Separa a data em partes usando a função split()
               var partesDataHora = dataHora.split("-");
-
-              // Crie um novo objeto Date() com a data separada
+              // Cria um novo objeto Date() com a data separada
               var dataPadrao = new Date(partesDataHora[0], partesDataHora[1] - 1, partesDataHora[2]);
-
-              // Use as funções getDay(), getMonth() e getFullYear() para obter as partes da data
+              // Usa as funções getDay(), getMonth() e getFullYear() para obter as partes da data
               var diaPadrao = dataPadrao.getDate();
               var mesPadrao = dataPadrao.getMonth() + 1;
               var anoPadrao = dataPadrao.getFullYear();
-
-              // Formate a data no formato "DD/MM/AAAA"
+              // Formata a data no formato "DD/MM/AAAA"
               var dataFormatada = diaPadrao + "/" + mesPadrao + "/" + anoPadrao;
 
               const trTabela = document.createElement('tr')
