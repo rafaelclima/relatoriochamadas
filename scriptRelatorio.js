@@ -2,7 +2,7 @@ const filterBtn = document.getElementById('filter-csv')
 const inputRamal = document.getElementById('input-ramal')
 const mediaExtCall = document.getElementById('mediaExt-call')
 const mediaIntCall = document.getElementById('mediaInt-call')
-const divCards = document.getElementById('divCards')
+const divCards = document.getElementById('menu')
 const dataInicial = document.getElementById('start-date')
 const dataFinal = document.getElementById('end-date')
 const inputDestino = document.getElementById('input-ramal-destino')
@@ -16,6 +16,7 @@ const extEfetuadaOcupado = document.getElementById('externas-efetuada-ocupado')
 const extEfetuadaAtendida = document.getElementById('externas-efetuada-atendida')
 const extEfetuadaNaoAtendida = document.getElementById('externas-efetuada-nao-atendida')
 const extEfetuadaFalha = document.getElementById('externas-efetuada-falha')
+const tempoExtEfetuada = document.getElementById('tempo-chamada-externa-efetuada')
 
 const resumoEfetuadaOcupado = document.getElementById('resumo-efetuada-ocupado')
 const resumoEfetuadaAtendida = document.getElementById('resumo-efetuada-atendida')
@@ -31,6 +32,7 @@ let qtdExtEfetuadaOcupado = 0
 let qtdExtEfetuadaAtendida = 0
 let qtdExtEfetuadaNaoAtendida = 0
 let qtdExtEfetuadaFalha = 0
+let tempoMedioExtEfetuada = 0
 
 
 let arrCsv = []
@@ -38,7 +40,7 @@ let duracaoMediaExt = 0
 let duracaoMediaInt = 0
 
 function segundosParaMinutos(segundos) {
-  const vlrTotal = segundos / qtdChamadasExt
+  const vlrTotal = segundos / qtdExtEfetuadaAtendida
   const minutos = Math.floor(vlrTotal / 60);
   const segundosRestantes = vlrTotal % 60;
   return `${minutos}m ${Math.round(segundosRestantes)}s`;
@@ -99,51 +101,65 @@ filterBtn.addEventListener('click', function() {
           const dataFim = new Date(dataFinal.value).getTime();
 
           if(dataInicial !== "" && dataFinal !== "") {
+            
+          //CHAMADAS REALIZADAS (Ramal = Origem)  
+          if(inputRamal.value == ramaisOrigem.Origem) {
 
-            if(inputRamal.value == ramaisOrigem.Origem) {
+            const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");
+            const horaFiltrada = ramaisOrigem.Data.match(regexFiltroHora)[1]
+            // Filtra os dados dentro do intervalo de tempo
+            const data = new Date(dataFiltrada).getTime();
 
-              const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");
-              const horaFiltrada = ramaisOrigem.Data.match(regexFiltroHora)[1]
-              // Filtra os dados dentro do intervalo de tempo
-              const data = new Date(dataFiltrada).getTime();
+            if(data >= dataInicio && data <= dataFim) {
 
-               if(data >= dataInicio && data <= dataFim) {
+              //CHAMADAS INTERNAS REALIZADAS
+              if(toString.length <= 5 && ramaisOrigem.Estado === "BUSY") {
+                qtdIntEfetuadaOcupado++
+                intEfetuadaOcupado.innerText = qtdIntEfetuadaOcupado                  
+              }else if (toString.length <= 5 && ramaisOrigem.Estado === "ANSWERED" && toNumber > 1) {
+                qtdIntEfetuadaAtendida++
+                intEfetuadaAtendida.innerText = qtdIntEfetuadaAtendida                                    
+              }else if (toString.length <= 5 && ramaisOrigem.Estado === "NO ANSWER") {
+                qtdIntEfetuadaNaoAtendida++
+                intEfetuadaNaoAtendida.innerText = qtdIntEfetuadaNaoAtendida                  
+              }else if (toString.length <= 5 && ramaisOrigem.Estado === "FAILED") {
+                qtdIntEfetuadaFalha++
+                intEfetuadaFalha.innerText = qtdIntEfetuadaFalha
 
-                //CHAMADAS INTERNAS REALIZADAS
-                if(toString.length <= 5 && ramaisOrigem.Estado === "BUSY") {
-                  qtdIntEfetuadaOcupado++
-                  intEfetuadaOcupado.innerText = qtdIntEfetuadaOcupado                  
-                }else if (toString.length <= 5 && ramaisOrigem.Estado === "ANSWERED" && toNumber > 1) {
-                  qtdIntEfetuadaAtendida++
-                  intEfetuadaAtendida.innerText = qtdIntEfetuadaAtendida                                    
-                }else if (toString.length <= 5 && ramaisOrigem.Estado === "NO ANSWER") {
-                  qtdIntEfetuadaNaoAtendida++
-                  intEfetuadaNaoAtendida.innerText = qtdIntEfetuadaNaoAtendida                  
-                }else if (toString.length <= 5 && ramaisOrigem.Estado === "FAILED") {
-                  qtdIntEfetuadaFalha++
-                  intEfetuadaFalha.innerText = qtdIntEfetuadaFalha
-
-                //CHAMADAS EXTERNAS REALIZADAS
-                }else if (toString.length > 5 && ramaisOrigem.Estado === "BUSY") {
-                  qtdExtEfetuadaOcupado++
-                  extEfetuadaOcupado.innerText = qtdExtEfetuadaOcupado                  
-                }else if (toString.length > 5 && ramaisOrigem.Estado === "ANSWERED" && toNumber > 1) {
-                  qtdExtEfetuadaAtendida++
-                  extEfetuadaAtendida.innerText = qtdExtEfetuadaAtendida                  
-                }else if (toString.length > 5 && ramaisOrigem.Estado === "NO ANSWER") {
-                  qtdExtEfetuadaNaoAtendida++
-                  extEfetuadaNaoAtendida.innerText = qtdExtEfetuadaNaoAtendida                  
-                }else if (toString.length > 5 && ramaisOrigem.Estado === "FAILED") {
-                  qtdExtEfetuadaFalha++
-                  extEfetuadaFalha.innerText = qtdExtEfetuadaFalha                  
-                }
-                //RESUMO DE CHAMADAS REALIZADAS
-                resumoEfetuadaOcupado.innerText = (qtdIntEfetuadaOcupado + qtdExtEfetuadaOcupado)
-                resumoEfetuadaAtendida.innerText = (qtdIntEfetuadaAtendida + qtdExtEfetuadaAtendida)
-                resumoEfetuadaNaoAtendida.innerText = (qtdIntEfetuadaNaoAtendida + qtdExtEfetuadaNaoAtendida)
-                resumoEfetuadaFalha.innerText = (qtdIntEfetuadaFalha + qtdExtEfetuadaFalha)
+              //CHAMADAS EXTERNAS REALIZADAS
+              }else if (toString.length > 5 && ramaisOrigem.Estado === "BUSY") {
+                qtdExtEfetuadaOcupado++
+                extEfetuadaOcupado.innerText = qtdExtEfetuadaOcupado                  
+              }else if (toString.length > 5 && ramaisOrigem.Estado === "ANSWERED" && toNumber > 1) {
+                qtdExtEfetuadaAtendida++
+                extEfetuadaAtendida.innerText = qtdExtEfetuadaAtendida
+                tempoMedioExtEfetuada = (duracaoMediaExt + toNumber)
+                tempoExtEfetuada.innerText = segundosParaMinutos(tempoMedioExtEfetuada)                  
+              }else if (toString.length > 5 && ramaisOrigem.Estado === "NO ANSWER") {
+                qtdExtEfetuadaNaoAtendida++
+                extEfetuadaNaoAtendida.innerText = qtdExtEfetuadaNaoAtendida                  
+              }else if (toString.length > 5 && ramaisOrigem.Estado === "FAILED") {
+                qtdExtEfetuadaFalha++
+                extEfetuadaFalha.innerText = qtdExtEfetuadaFalha                  
+              }
+              //RESUMO DE CHAMADAS REALIZADAS
+              resumoEfetuadaOcupado.innerText = (qtdIntEfetuadaOcupado + qtdExtEfetuadaOcupado)
+              resumoEfetuadaAtendida.innerText = (qtdIntEfetuadaAtendida + qtdExtEfetuadaAtendida)
+              resumoEfetuadaNaoAtendida.innerText = (qtdIntEfetuadaNaoAtendida + qtdExtEfetuadaNaoAtendida)
+              resumoEfetuadaFalha.innerText = (qtdIntEfetuadaFalha + qtdExtEfetuadaFalha)
 
                 
+                
+            }
+          }
+          //CHAMADAS RECEBIDAS (Ramal = Destino)
+          if(inputRamal.value == ramaisOrigem.Destino){
+            if(data >= dataInicio && data <= dataFim) {
+              //CHAMADAS INTERNAS RECEBIDAS
+              if(toString.length <= 5 && ramaisOrigem.Estado === "BUSY"){
+                
+              }
+                            
             }
           }
         }

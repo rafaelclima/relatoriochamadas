@@ -9,6 +9,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="./faviconrad-16x16.png">
   <link rel="stylesheet" href="./stylesRelatorio.css">
   <script src="./scriptRelatorio.js" defer></script>
+  <script src="./menuDropdown.js" defer></script>
   <script src="./node_modules/papaparse/papaparse.min.js" defer></script>
   <title>Relatório de chamadas</title>
 </head>
@@ -24,22 +25,6 @@
       <input type="number" id="input-ramal">
       <label for="input-ramal-destino">Digite o ramal de destino</label>
       <input type="number" id="input-ramal-destino" placeholder="*opcional">
-      <!-- <label for="sel-mes">Selecione o mês de referência</label>
-      <select id="sel-mes" name="sel-mes">
-        <option value="00">Default</option>
-        <option value="01">Janeiro</option>
-        <option value="02">Fevereiro</option>
-        <option value="03">Março</option>
-        <option value="04">Abril</option>
-        <option value="05">Maio</option>
-        <option value="06">Junho</option>
-        <option value="07">Julho</option>
-        <option value="08">Agosto</option>
-        <option value="09">Setembro</option>
-        <option value="10">Outubro</option>
-        <option value="11">Novembro</option>
-        <option value="12">Dezembro</option>
-      </select> -->
       <form id="periodo-data">
         <label for="start-date">Data inicial:</label>
         <input type="date" id="start-date" name="start-date">
@@ -50,7 +35,7 @@
       <button id="filter-csv" type="button">Filtrar</button>
     </div>
   </nav>
-  
+
   <div class="container">
     <h1>Relatório de Ligações</h1>
     <div id="tabela">
@@ -90,242 +75,239 @@
         </tbody>
       </table>
     </div>
-    <div class="cards" id="divCards">
-      <h2>Chamadas Internas Efetuadas</h2>
-      <div id="chamadas-internas-efetuadas">
-        <div class="card">
-          <h3>Ocupadas</h3>
-          <div class="circle">
-            <span id="internas-efetuada-ocupado"></span>
-          </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Atendidas</h3>
-          <div class="circle">
-            <span id="internas-efetuada-atendida"></span>
-          </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Não atendidas</h3>
-          <div class="circle">
-            <span id="internas-efetuada-nao-atendida"></span>
-          </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Com falha</h3>
-          <div class="circle">
-            <span id="internas-efetuada-falha"></span>
-          </div>
-          <p></p>
-        </div>
 
-      </div>
+    <ul class="menu" id="menu">
+      <li>
+        <a href="#">Chamadas Externas</a>
+        <div class="content">
+          <h2>Chamadas Externas Efetuadas</h2>
+          <div id="chamadas-externas-efetuadas">
+            <div class="card">
+              <h3>Ocupadas</h3>
+              <div class="circle">
+                <span id="externas-efetuada-ocupado">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Atendidas</h3>
+              <div class="circle">
+                <span id="externas-efetuada-atendida">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Não atendidas</h3>
+              <div class="circle">
+                <span id="externas-efetuada-nao-atendida">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Com falha</h3>
+              <div class="circle">
+                <span id="externas-efetuada-falha">0</span>
+              </div>
+            </div>
+          </div>
 
-      <h2>Chamadas Externas Efetuadas</h2>
-      <div id="chamadas-externas-efetuadas">
-        <div class="card">
-          <h3>Ocupadas</h3>
-          <div class="circle">
-            <span id="externas-efetuada-ocupado"></span>
+          <h2>Chamadas Externas Recebidas</h2>
+          <div id="chamadas-externas-recebidas">
+            <div class="card">
+              <h3>Ocupadas</h3>
+              <div class="circle">
+                <span id="externas-recebida-ocupado">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Atendidas</h3>
+              <div class="circle">
+                <span id="externas-recebida-atendida">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Não atendidas</h3>
+              <div class="circle">
+                <span id="externas-recebida-nao-atendida">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Com falha</h3>
+              <div class="circle">
+                <span id="externas-recebida-falha">0</span>
+              </div>
+            </div>
           </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Atendidas</h3>
-          <div class="circle">
-            <span id="externas-efetuada-atendida"></span>
+          
+          <h2>Tempo médio da chamada</h2>
+          <div id="tempo-chamada-externa">
+            <div class="card">
+              <h3>Externa Efetuada</h3>
+              <div class="circle">
+                <span id="tempo-chamada-externa-efetuada">0</span>
+              </div>
+              <p></p>
+            </div>
+            <div class="card">
+              <h3>Externa Recebida</h3>
+              <div class="circle">
+                <span id="tempo-chamada-externa-recebida">0</span>
+              </div>
+              <p></p>
+            </div>
           </div>
-          <p></p>
         </div>
-        <div class="card">
-          <h3>Não atendidas</h3>
-          <div class="circle">
-            <span id="externas-efetuada-nao-atendida"></span>
-          </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Com falha</h3>
-          <div class="circle">
-            <span id="externas-efetuada-falha"></span>
-          </div>
-          <p></p>
-        </div>
-      </div>
+      </li>
 
-      <h2>Resumo das chamadas Efetuadas</h2>
-      <div id="resumo-chamadas-efetuadas">        
-        <div class="card">
-          <h3>Ocupadas</h3>
-          <div class="circle">
-            <span id="resumo-efetuada-ocupado"></span>
-          </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Atendidas</h3>
-          <div class="circle">
-            <span id="resumo-efetuada-atendida"></span>
-          </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Não atendidas</h3>
-          <div class="circle">
-            <span id="resumo-efetuada-nao-atendida"></span>
-          </div>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>Com falha</h3>
-          <div class="circle">
-            <span id="resumo-efetuada-falha"></span>
-          </div>
-          <p></p>
-        </div>
-      </div>
+      <!-- CHAMADAS INTERNAS -->
 
-      <!-- CHAMADAS RECEBIDAS -->
+      <li>
+        <a href="#">Chamadas Internas</a>
+        <div class="content">
+          <h2>Chamadas Internas Efetuadas</h2>
+          <div id="chamadas-internas-efetuadas">
+            <div class="card">
+              <h3>Ocupadas</h3>
+              <div class="circle">
+                <span id="internas-efetuada-ocupado">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Atendidas</h3>
+              <div class="circle">
+                <span id="internas-efetuada-atendida">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Não atendidas</h3>
+              <div class="circle">
+                <span id="internas-efetuada-nao-atendida">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Com falha</h3>
+              <div class="circle">
+                <span id="internas-efetuada-falha">0</span>
+              </div>
+            </div>
+          </div>
 
-      <div class="cards" id="divCards">
-        <h2>Chamadas Internas Recebidas</h2>
-        <div id="chamadas-internas-recebidas">
-          <div class="card">
-            <h3>Ocupadas</h3>
-            <div class="circle">
-              <span id="internas-ocupado"></span>
+          <h2>Chamadas Internas Recebidas</h2>
+          <div id="chamadas-internas-recebidas">
+            <div class="card">
+              <h3>Ocupadas</h3>
+              <div class="circle">
+                <span id="internas-recebidas-ocupado">0</span>
+              </div>
             </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Atendidas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
+            <div class="card">
+              <h3>Atendidas</h3>
+              <div class="circle">
+                <span id="internas-recebidas-atendida">0</span>
+              </div>
             </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Não atendidas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
+            <div class="card">
+              <h3>Não atendidas</h3>
+              <div class="circle">
+                <span id="internas-recebidas--nao-atendida">0</span>
+              </div>
             </div>
-            <p></p>
+            <div class="card">
+              <h3>Com falha</h3>
+              <div class="circle">
+                <span id="internas-recebidas-falha">0</span>
+              </div>
+            </div>  
           </div>
-          <div class="card">
-            <h3>Com falha</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-  
-        </div>
-  
-        <h2>Chamadas Externas Recebidas</h2>
-        <div id="chamadas-externas-recebidas">
-          <div class="card">
-            <h3>Ocupadas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Atendidas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Não atendidas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Com falha</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-        </div>
-  
-        <h2>Resumo das chamadas Recebidas</h2>
-        <div id="resumo-chamadas-recebidas">        
-          <div class="card">
-            <h3>Ocupadas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Atendidas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Não atendidas</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-          <div class="card">
-            <h3>Com falha</h3>
-            <div class="circle">
-              <span id="int-call"></span>
-            </div>
-            <p></p>
-          </div>
-        </div>
 
+          <h2>Tempo médio da chamada</h2>
+          <div id="tempo-chamada-interna">
+            <div class="card">
+              <h3>Interna Efetuada</h3>
+              <div class="circle">
+                <span id="tempo-chamada-interna-efetuada">0</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Interna Recebida</h3>
+              <div class="circle">
+                <span id="tempo-chamada-interna-recebida">0</span>
+              </div>
+            </div>
+          </div>
 
+        </div>
+      </li>
 
-      <div class="card">
-        <h3>Ligações entre ramais</h3>
-        <div class="circle">
-          <span id="int-call"></span>
+      <!-- RESUMO TOTAL DAS CHAMADAS -->
+
+      <li>
+        <a href="#">Resumo total das chamadas</a>
+        <div class="content">
+          <h2>Resumo das chamadas Efetuadas</h2>
+          <div id="resumo-chamadas-efetuadas">        
+            <div class="card">
+              <h3>Ocupadas</h3>
+              <div class="circle">
+                <span id="resumo-efetuada-ocupado">0</span>
+              </div>
+              <p></p>
+            </div>
+            <div class="card">
+              <h3>Atendidas</h3>
+              <div class="circle">
+                <span id="resumo-efetuada-atendida">0</span>
+              </div>
+              <p></p>
+            </div>
+            <div class="card">
+              <h3>Não atendidas</h3>
+              <div class="circle">
+                <span id="resumo-efetuada-nao-atendida">0</span>
+              </div>
+              <p></p>
+            </div>
+            <div class="card">
+              <h3>Com falha</h3>
+              <div class="circle">
+                <span id="resumo-efetuada-falha">0</span>
+              </div>
+              <p></p>
+            </div>
+          </div>
+
+          <h2>Resumo das chamadas Recebidas</h2>
+          <div id="resumo-chamadas-recebidas">        
+            <div class="card">
+              <h3>Ocupadas</h3>
+              <div class="circle">
+                <span id="int-call">0</span>
+              </div>
+              <p></p>
+            </div>
+            <div class="card">
+              <h3>Atendidas</h3>
+              <div class="circle">
+                <span id="int-call">0</span>
+              </div>
+              <p></p>
+            </div>
+            <div class="card">
+              <h3>Não atendidas</h3>
+              <div class="circle">
+                <span id="int-call">0</span>
+              </div>
+              <p></p>
+            </div>
+            <div class="card">
+              <h3>Com falha</h3>
+              <div class="circle">
+                <span id="int-call">0</span>
+              </div>
+              <p></p>
+            </div>
+          </div>
+
         </div>
-        <p>Quantidade de ligações internas com duração maior que 1 segundo.</p>
-      </div>
-      <div class="card">
-        <h3>Ligações entre ramais</h3>
-        <div class="circle">
-          <span id="int-call"></span>
-        </div>
-        <p>Quantidade de ligações internas com duração maior que 1 segundo.</p>
-      </div>
-      <div class="card">
-        <h3>Ligações externas</h3>
-        <div class="circle">
-          <span id="ext-call"></span>
-        </div>
-        <p>Quantidade de ligações externas com duração maior que 1 segundo.</p>
-      </div>
-      <div class="card">
-        <h3>Duração média das ligações internas</h3>
-        <div class="circle">
-          <span id="mediaInt-call"></span>
-        </div>
-        <p>Uma média de todas as ligações internas com duração maior que 1 segundo.</p>
-      </div>
-      <div class="card">
-        <h3>Duração média das ligações externas</h3>
-        <div class="circle">
-          <span id="mediaExt-call"></span>
-        </div>
-        <p>Uma média de todas as ligações externas com duração maior que 1 segundo.</p>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </body>
 </html>
