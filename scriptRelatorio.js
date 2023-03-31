@@ -199,25 +199,20 @@ filterBtn.addEventListener('click', function() {
 
                 relatorioTotal.innerText = qtdItensRelatorio
 
-              if (ramaisOrigem.Estado === "ANSWERED") {                  
+              if (ramaisOrigem.Estado === "ANSWERED") {
                 qtdRelatorioAtendida++
                 relatorioAtendida.innerText = qtdRelatorioAtendida
-                console.log("QTD: " + qtdRelatorioAtendida + "\nEstado: " + ramaisOrigem.Estado + "\nQTD Rela: " + qtdItensRelatorio)                  
               }else if (ramaisOrigem.Estado === "NO ANSWER") {
                 qtdRelatorioNaoAtendida++
                 relatorioNaoAtendida.innerText = qtdRelatorioNaoAtendida
-                console.log("QTD: " + qtdRelatorioNaoAtendida + "\nEstado: " + ramaisOrigem.Estado + "\nQTD Rela: " + qtdItensRelatorio)
               }else if (ramaisOrigem.Estado === "BUSY") {
                 qtdRelatorioOcupado++
                 relatorioOcupado.innerText = qtdRelatorioOcupado
-                console.log("QTD: " + qtdRelatorioOcupado + "\nEstado: " + ramaisOrigem.Estado + "\nQTD Rela: " + qtdItensRelatorio)                  
               }else if (ramaisOrigem.Estado === "FAILED") {
                 qtdRelatorioFalha++
                 relatorioFalha.innerText = qtdRelatorioFalha
-                console.log("QTD: " + qtdRelatorioFalha + "\nEstado: " + ramaisOrigem.Estado + "\nQTD Rela: " + qtdItensRelatorio)                  
-              }                
+              }
               
-                            
               const trTabela = document.createElement('tr')
               const tdOrigem = document.createElement('td')
               tdOrigem.innerText = ramaisOrigem.Origem
