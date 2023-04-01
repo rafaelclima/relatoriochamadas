@@ -121,6 +121,16 @@ function transformarStatus(estado) {
 
 filterBtn.addEventListener('click', function() {
 
+  if (window.innerWidth <= 500) {
+    const ocultarNav = document.querySelector('.ocultar-nav')
+    
+    setTimeout(() => {
+      ocultarNav.classList.add('hidden');
+    }, 1100);
+
+    divCards.style.zIndex = 10
+  }
+
   Papa.parse(document.getElementById('input-csv').files[0], {
     download: true,
     header: true,
@@ -189,7 +199,12 @@ filterBtn.addEventListener('click', function() {
               var dataFormatada = diaPadrao + "/" + mesPadrao + "/" + anoPadrao;
 
               if (qtdItensRelatorio >= 15) {
-                cardResumo.style.display = 'block'
+                if (window.innerWidth <= 500) {
+                  cardResumo.style.display = 'flex'
+                }else {
+                  cardResumo.style.display = 'block'
+                }
+                
               }
                 const relatorioTotal = document.getElementById('relatorio-total')
                 const relatorioAtendida = document.getElementById('relatorio-atendida')
