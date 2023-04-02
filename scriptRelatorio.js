@@ -199,12 +199,11 @@ filterBtn.addEventListener('click', function() {
               var dataFormatada = diaPadrao + "/" + mesPadrao + "/" + anoPadrao;
 
               if (qtdItensRelatorio >= 15) {
-                if (window.innerWidth <= 500) {
+                if (window.innerWidth <= 960) {
                   cardResumo.style.display = 'flex'
                 }else {
                   cardResumo.style.display = 'block'
                 }
-                
               }
                 const relatorioTotal = document.getElementById('relatorio-total')
                 const relatorioAtendida = document.getElementById('relatorio-atendida')
@@ -250,6 +249,8 @@ filterBtn.addEventListener('click', function() {
             
           }else if(dataInicial !== "" && dataFinal !== "") {
             divCards.style.opacity = 1
+            const tabela = document.getElementById('tabela')
+            tabela.style.display = 'none'
             const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");           
             
             // Filtra os dados dentro do intervalo de tempo
