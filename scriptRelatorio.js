@@ -63,6 +63,12 @@ let qtdExtRecebidaNaoAtendida = 0
 let qtdExtRecebidaFalha = 0
 let tempoMedioExtRecebida = 0
 
+let qtdRelatorioAtendida = 0
+let qtdRelatorioNaoAtendida = 0
+let qtdRelatorioOcupado = 0
+let qtdRelatorioFalha = 0
+let qtdItensRelatorio = 0
+
 
 let arrCsv = []
 let duracaoMediaExt = 0
@@ -114,7 +120,17 @@ function transformarStatus(estado) {
 }
 
 filterBtn.addEventListener('click', function() {
-  // divCards.style.opacity = 1
+
+  if (window.innerWidth <= 500) {
+    const ocultarNav = document.querySelector('.ocultar-nav')
+    
+    setTimeout(() => {
+      ocultarNav.classList.add('hidden');
+    }, 1100);
+
+    divCards.style.zIndex = 10
+  }
+
   Papa.parse(document.getElementById('input-csv').files[0], {
     download: true,
     header: true,
@@ -124,8 +140,6 @@ filterBtn.addEventListener('click', function() {
     dynamicTyping: true,
     skipEmptyLines: true,
     complete: function(results) {
-      // const data = results.data;
-      // código para extrair as informações
       arrCsv = results.data.map(item => ({
         Data: item.Data,
         Origem: item.Origem,
@@ -160,10 +174,16 @@ filterBtn.addEventListener('click', function() {
             const corpoTabela = document.getElementById('corpo-tabela')
             const filtroTabela = document.getElementById('filtro-tabela')
             divCards.style.display = 'none'
+            const horaFiltrada = ramaisOrigem.Data.match(regexFiltroHora)[1]
+            const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");
+            // Filtra os dados dentro do intervalo de tempo
+            const data = new Date(dataFiltrada).getTime();
 
-            if (inputRamal.value == ramaisOrigem.Origem && inputDestino.value == ramaisOrigem.Destino) {
-              const horaFiltrada = ramaisOrigem.Data.match(regexFiltroHora)[1]
-              const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");
+            if (inputRamal.value == ramaisOrigem.Origem && inputDestino.value == ramaisOrigem.Destino && data >= dataInicio && data <= dataFim) {
+
+              const cardResumo = document.getElementById('card-resumo')
+              cardResumo.style.display = 'none' 
+              qtdItensRelatorio++
 
               // Data no formato "AAAA-MM-DD"
               var dataHora = dataFiltrada;
@@ -178,6 +198,35 @@ filterBtn.addEventListener('click', function() {
               // Formata a data no formato "DD/MM/AAAA"
               var dataFormatada = diaPadrao + "/" + mesPadrao + "/" + anoPadrao;
 
+              if (qtdItensRelatorio >= 15) {
+                if (window.innerWidth <= 960) {
+                  cardResumo.style.display = 'flex'
+                }else {
+                  cardResumo.style.display = 'block'
+                }
+              }
+                const relatorioTotal = document.getElementById('relatorio-total')
+                const relatorioAtendida = document.getElementById('relatorio-atendida')
+                const relatorioNaoAtendida = document.getElementById('relatorio-nao-atendida')
+                const relatorioOcupado = document.getElementById('relatorio-ocupado')
+                const relatorioFalha = document.getElementById('relatorio-falha')
+
+                relatorioTotal.innerText = qtdItensRelatorio
+
+              if (ramaisOrigem.Estado === "ANSWERED") {
+                qtdRelatorioAtendida++
+                relatorioAtendida.innerText = qtdRelatorioAtendida
+              }else if (ramaisOrigem.Estado === "NO ANSWER") {
+                qtdRelatorioNaoAtendida++
+                relatorioNaoAtendida.innerText = qtdRelatorioNaoAtendida
+              }else if (ramaisOrigem.Estado === "BUSY") {
+                qtdRelatorioOcupado++
+                relatorioOcupado.innerText = qtdRelatorioOcupado
+              }else if (ramaisOrigem.Estado === "FAILED") {
+                qtdRelatorioFalha++
+                relatorioFalha.innerText = qtdRelatorioFalha
+              }
+              
               const trTabela = document.createElement('tr')
               const tdOrigem = document.createElement('td')
               tdOrigem.innerText = ramaisOrigem.Origem
@@ -200,6 +249,8 @@ filterBtn.addEventListener('click', function() {
             
           }else if(dataInicial !== "" && dataFinal !== "") {
             divCards.style.opacity = 1
+            const tabela = document.getElementById('tabela')
+            tabela.style.display = 'none'
             const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");           
             
             // Filtra os dados dentro do intervalo de tempo
