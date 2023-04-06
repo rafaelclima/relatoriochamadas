@@ -139,31 +139,32 @@ filterBtn.addEventListener('click', function() {
     quoteChar: '"',
     dynamicTyping: true,
     skipEmptyLines: true,
+    encoding: "utf-8",
     complete: function(results) {
       arrCsv = results.data.map(item => ({
         Data: item.Data,
         Origem: item.Origem,
         Estado: item.Estado,
         Destino: item.Destino,
-        Duracao: item.Duracao
+        Duração: item.Duração
       }));
     
       
 
       const expressao = /^([\d.]+)s/; // expressão regular para encontrar a parte da string a ser removida
       for (let i = 0; i < arrCsv.length; i++) {
-        const duracao = arrCsv[i].Duracao;
+        const duracao = arrCsv[i].Duração;
         const resultado = duracao.match(expressao);
         const valor = resultado[1];
-        arrCsv[i].Duracao = valor
+        arrCsv[i].Duração = valor
       }
 
       arrCsv.forEach(function(ramaisOrigem){
           const csvData = ramaisOrigem.Data;
           const mes = csvData.split("-")[1];
-          let toNumber = Number(ramaisOrigem.Duracao)
+          let toNumber = Number(ramaisOrigem.Duração)
           let toString = ramaisOrigem.Destino.toString()
-          let toNumberRecebida = Number(ramaisOrigem.Duracao)
+          let toNumberRecebida = Number(ramaisOrigem.Duração)
           const toStringRecebida = ramaisOrigem.Origem.toString()
           const regexFiltroData = /^(\d{4}-\d{2}-\d{2}).*/;
           const regexFiltroHora = /\d{4}-\d{2}-\d{2}\s(\d{2}:\d{2}:\d{2})/
@@ -235,7 +236,7 @@ filterBtn.addEventListener('click', function() {
               const tdStatus = document.createElement('td')
               tdStatus.innerText = transformarStatus(ramaisOrigem.Estado)
               const tdDuracao = document.createElement('td')
-              tdDuracao.innerText = converterTempo(ramaisOrigem.Duracao) 
+              tdDuracao.innerText = converterTempo(ramaisOrigem.Duração) 
 
               filtroTabela.style.display = 'block'
 
