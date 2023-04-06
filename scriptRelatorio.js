@@ -121,6 +121,16 @@ function transformarStatus(estado) {
 
 filterBtn.addEventListener('click', function() {
 
+  if (window.innerWidth <= 500) {
+    const ocultarNav = document.querySelector('.ocultar-nav')
+    
+    setTimeout(() => {
+      ocultarNav.classList.add('hidden');
+    }, 1100);
+
+    divCards.style.zIndex = 10
+  }
+
   Papa.parse(document.getElementById('input-csv').files[0], {
     download: true,
     header: true,
@@ -190,7 +200,7 @@ filterBtn.addEventListener('click', function() {
               var dataFormatada = diaPadrao + "/" + mesPadrao + "/" + anoPadrao;
 
               if (qtdItensRelatorio >= 15) {
-                cardResumo.style.display = 'block'
+                  cardResumo.style.display = 'flex'
               }
                 const relatorioTotal = document.getElementById('relatorio-total')
                 const relatorioAtendida = document.getElementById('relatorio-atendida')
@@ -236,6 +246,8 @@ filterBtn.addEventListener('click', function() {
             
           }else if(dataInicial !== "" && dataFinal !== "") {
             divCards.style.opacity = 1
+            const tabela = document.getElementById('tabela')
+            tabela.style.display = 'none'
             const dataFiltrada = ramaisOrigem.Data.replace(regexFiltroData, "$1");           
             
             // Filtra os dados dentro do intervalo de tempo
