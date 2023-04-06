@@ -19,13 +19,8 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-<<<<<<< HEAD
   width: 20%;
   min-height: 100vh;
-=======
-  width: 25%;
-  height: 100vh;
->>>>>>> bcf8abfbde35626ca060e393df58717c66458803
   display: flex;
   flex-direction: column;
   align-items: center;
