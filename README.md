@@ -40,7 +40,7 @@ Solução web moderna para análise de relatórios de chamadas do Asterisk VOIP.
 
 ## Screenshots 📸
 
-![Relatório de Chamadas](https://via.placeholder.com/800x600?text=Desktop+Version)
+![Relatório de Chamadas](https://github.com/rafaelclima/relatoriochamadas/blob/master/.gitassets/capa.png?raw=true)
 
 ## Tecnologias Utilizadas 🛠️
 
